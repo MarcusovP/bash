@@ -1,5 +1,0 @@
-#!/bin/bash
-
-chmod +x /tmp/poc
-sudo -u root /tmp/poc
-sudo cat /root/root.txt
