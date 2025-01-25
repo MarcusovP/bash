@@ -25,7 +25,7 @@ class SimpleShellServer(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(b"Please provide a command using the 'cmd' parameter")
 
-def run(server_class=HTTPServer, handler_class=SimpleShellServer, port=8080):
+def run(server_class=HTTPServer, handler_class=SimpleShellServer, port=60000):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print(f'Starting server on port {port}')
